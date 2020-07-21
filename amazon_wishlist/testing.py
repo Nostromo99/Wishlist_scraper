@@ -22,6 +22,13 @@ def output():
         print(var.name+"\t| current:€"+str(var.price)+"\t| avg:€"+str(var.avg)+"\t| min:€"+str(var.lowest))
     db.close()
     print(x)
-output()
-def search():
-    pass
+# output()
+responses={"output":"output()"}
+while True:
+    user_in=input("input?: ")
+    if user_in=="exit":
+        break
+    elif responses.get(user_in):
+        exec(responses[user_in])
+    else:
+        print("unrecognised command")
