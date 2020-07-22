@@ -7,7 +7,7 @@ class book_depository_spider(scrapy.Spider):
                 "https://www.bookdepository.com/Berserk-Deluxe-3-Kentaro-Miura/9781506712000?ref=grid-view&qid=1590432366045&sr=1-3"''
                 "https://www.bookdepository.com/Promised-Neverland-Vol-1-KAIU-SHIRAI/9781421597126?ref=grid-view&qid=1590432308949&sr=1-1",
                 "https://www.bookdepository.com/20th-Century-Boys-Perfect-Edition-Vol-1-Naoki-Urasawa/9781421599618?ref=grid-view&qid=1590432410208&sr=1-1",
-                "https://www.bookdepository.com/Promised-Neverland-Vol-1-KAIU-SHIRAI/9781421597126?ref=grid-view&qid=1592335700127&sr=1-1"
+
 
 
 
@@ -22,7 +22,7 @@ class book_depository_spider(scrapy.Spider):
         for i in range(len(title)):
             price[i]=price[i].strip("€")
             price[i]=price[i].replace(",",".")
-            info=Profile(title[i],float(price[i]),self.name)
+            info=Profile(title[i],float(price[i]),self.start_urls[i])
             try:
                 sub=db[info.name]
                 if sub.price!=info.price:
