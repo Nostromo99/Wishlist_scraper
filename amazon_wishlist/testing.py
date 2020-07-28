@@ -17,7 +17,7 @@ from amazon_wishlist.amazon_wishlist.spiders.book_depository_spider import book_
 #     db.close()
 spider=book_depository_spider
 def output():
-    x=os.system("scrapy crawl book_depository")
+    # x=os.system("scrapy crawl book_depository")
     process=CrawlerProcess()
     process.crawl(book_depository_spider)
     process.start()
@@ -26,13 +26,14 @@ def output():
         var=db[item]
         print(var.name+"\t| current:€"+str(var.price)+"\t| avg:€"+str(var.avg)+"\t| min:€"+str(var.lowest))
     db.close()
-    print(x)
+    # print(x)
 def add():
     url=input("url?")
     check=requests.get(url)
     if check.ok and "bookdepository" in url:
-        book_depository_spider.start_urls.append(url)
-        print(book_depository_spider.start_urls)
+        with open("urls.txt","a") as urls:
+            urls.write(url)
+
     else:
         print("url not valid")
 responses={"output":"output()","add":"add()"}
