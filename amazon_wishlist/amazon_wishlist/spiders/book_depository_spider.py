@@ -27,11 +27,12 @@ class book_depository_spider(scrapy.Spider):
 
         price[0]=price[0].strip("€")
         price[0]=price[0].replace(",",".")
-        info=Profile(title[0],float(price[0]),self.start_urls)
+        info=Profile(title[0],float(price[0]),str(response)[5:-1])
+
         try:
             sub=db[info.name]
             if sub.price!=info.price:
-                sub.avg = (sub.avg + info.price) / 2
+                sub.avg = format((sub.avg + info.price) / 2,".2f")
             sub.price=info.price
 
             if sub.lowest > info.price:
