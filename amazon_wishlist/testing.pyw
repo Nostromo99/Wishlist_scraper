@@ -6,7 +6,7 @@ from PIL import Image
 from PIL import ImageTk
 from tkinter import *
 wishlist=Tk()
-wishlist.geometry("700x700")
+wishlist.geometry("1200x700")
 scrollbar=Scrollbar(wishlist)
 def add(url):
     try:
@@ -21,19 +21,20 @@ def add(url):
 
     else:
         print("url not valid")
-def remove(row,item):
+def remove(row,item,inner_frame):
     db=shelve.open("list")
     with open("urls.txt", "r") as url:
         urls=url.readlines()
     with open("urls.txt","w") as new:
         for url in urls:
-            if url.strip("\n")!=item.link:
+            if url.strip("\n")!=item["link"]:
                 new.write(url)
     del db[item["name"]]
     db.close()
-    for label in wishlist.grid_slaves():
+    for label in inner_frame.grid_slaves():
         if int(label.grid_info()["row"]==row):
             label.grid_forget()
+    os.remove("amazon_wishlist/images/full/"+item["file"]+".jpg")
 
 class geo():
     def __init__(self,profile,row):
@@ -43,7 +44,7 @@ def update():
     os.system("scrapy crawl book_depository") #-s LOG_ENABLED=False")
     db = shelve.open("list")
     row = 0
-    widgets=wishlist.grid_slaves()
+    widgets=wishlist.pack_slaves()
     buttons=[]
     for item in widgets:
         item.destroy()
@@ -68,7 +69,7 @@ def update():
         Label(master=inner_frame,text= "|current:€"+str(var["price"])+"\t|").grid(row=row,column=2)
         Label(master=inner_frame,text= "avg:€"+str(var["avg"])+"\t|").grid(row=row,column=3)
         Label(master=inner_frame,text= "min:€"+str(var["lowest"])).grid(row=row,column=4)
-        buttons.append(Button(master=inner_frame,text="remove",command=lambda i=row ,item=var: remove(i,item)))
+        buttons.append(Button(master=inner_frame,text="remove",command=lambda i=row ,item=var ,frame=inner_frame: remove(i,item,frame)))
         buttons[row].grid(row=row,column=5)
         row+=1
     entry1=Entry(inner_frame)
