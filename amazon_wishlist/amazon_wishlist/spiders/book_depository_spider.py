@@ -1,6 +1,7 @@
 import scrapy
 from .. Profile import Profile
 import shelve
+import hashlib
 from scrapy.http.request import Request
 class book_depository_spider(scrapy.Spider):
     name="book_depository"
@@ -23,25 +24,26 @@ class book_depository_spider(scrapy.Spider):
     def parse(self, response):
         title=response.css('h1').css("::text").extract()
         price=response.css('.sale-price').css("::text").extract()
+        image=response.css('.book-img').css("img::attr(src)").extract()
         db = shelve.open("list")
 
         price[0]=price[0].strip("€")
         price[0]=price[0].replace(",",".")
-        info=Profile(title[0],float(price[0]),str(response)[5:-1])
-
+        info=Profile(name=title[0],price=float(price[0]),link=str(response)[5:-1],avg=float(price[0]),lowest=float(price[0]),image_urls=image[0],file=hashlib.sha1(image[0].encode("utf-8")).hexdigest())
         try:
-            sub=db[info.name]
-            if sub.price!=info.price:
-                sub.avg = format((sub.avg + info.price) / 2,".2f")
-            sub.price=info.price
+            sub=db[info.get("name")]
+            if sub.price!=info.get("price"):
+                sub["avg"] = format((sub.avg + info.get(price) / 2,".2f"))
+            sub["price"]=info.get("price")
 
-            if sub.lowest > info.price:
-                sub.lowest = info.price
-            db[info.name]=sub
+            if sub["lowest"] > info.get("price"):
+                sub["lowest"] = info.get("price")
+            db[info.get("name")]=sub
 
         except:
-            db[info.name]=info
+            db[info.get("name")]=info
         db.close()
+        return info
 # class Profile:
 #     def __init__(self,name,price,site):
 #         self.name=name

@@ -1,7 +1,11 @@
-class Profile:
-    def __init__(self,name,price,link):
-        self.name=name
-        self.price=price
-        self.link=link
-        self.lowest=price
-        self.avg=price
+from scrapy.item import Item, Field
+class Profile(Item):
+
+    name=Field()
+    price=Field()
+    link=Field()
+    lowest=Field()
+    avg=Field()
+    image_urls = Field()
+    images=Field()
+    file=Field()
