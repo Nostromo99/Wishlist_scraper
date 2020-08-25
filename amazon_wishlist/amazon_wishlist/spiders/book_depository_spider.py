@@ -22,7 +22,7 @@ class book_depository_spider(scrapy.Spider):
         try:
             sub=db[info.get("name")]
             if sub.get("price")!=info.get("price"):
-                sub["avg"] = format((sub.get("avg") + info.get(price) / 2,".2f"))
+                sub["avg"] = format((sub.get("avg") + (info.get("price") / 2),".2f"))
             sub["price"]=info.get("price")
             if sub["lowest"] > info.get("price"):
                 sub["lowest"] = info.get("price")

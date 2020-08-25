@@ -8,11 +8,18 @@ from tkinter import *
 wishlist=Tk()
 wishlist.geometry("1200x700")
 scrollbar=Scrollbar(wishlist)
-def add(url):
+def bad_url(entry):
+    entry.delete(0,END)
+    entry.config(foreground="red",background="black")
+    entry.insert(0,"invalid url")
+    entry.bind("<Button-1>",lambda e:entry.config(foreground="black",background="white")or entry.delete(0,END))
+
+def add(entry):
+    url=entry.get()
     try:
         check=requests.get(url)
     except:
-        print("not a valid url")
+        bad_url(entry)
         return
     if check.ok and "bookdepository" in url:
         with open("urls.txt","a") as urls:
@@ -20,7 +27,7 @@ def add(url):
         update()
 
     else:
-        print("url not valid")
+        bad_url(entry)
 def remove(row,item,inner_frame):
     db=shelve.open("list")
     with open("urls.txt", "r") as url:
@@ -74,7 +81,7 @@ def update():
         row+=1
     entry1=Entry(inner_frame)
     entry1.grid(row=row,column=1)
-    Button(inner_frame,text="add",command=lambda: add(entry1.get())).grid(row=row+1,column=1,pady=5)
+    Button(inner_frame,text="add",command=lambda: add(entry1)).grid(row=row+1,column=1,pady=5)
 
     db.close()
 update()
