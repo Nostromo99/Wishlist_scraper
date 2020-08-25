@@ -43,7 +43,7 @@ def remove(row,item,inner_frame):
     for label in inner_frame.grid_slaves():
         if int(label.grid_info()["row"]==row):
             label.grid_forget()
-    os.remove("amazon_wishlist/images/full/"+item["file"]+".jpg")
+    os.remove("book_depository_wishlist/images/full/"+item["file"]+".jpg")
 
 
 
@@ -69,7 +69,7 @@ def update():
     canvas.bind_all("<MouseWheel>",lambda event:canvas.yview_scroll(-1*(int(event.delta/120)),"units"))
     for item in db:
         var=db[item]
-        img=ImageTk.PhotoImage(PIL.Image.open("amazon_wishlist/images/full/"+var["file"]+".jpg").resize((200,200)))
+        img=ImageTk.PhotoImage(PIL.Image.open("book_depository_wishlist/images/full/"+var["file"]+".jpg").resize((200,200)))
         rows.append(Frame(inner_frame))
         info_set=rows[row]
         info_set.grid(row=row,column=0,sticky=W)

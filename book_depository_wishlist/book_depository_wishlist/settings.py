@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for amazon_wishlist project
+# Scrapy settings for book_depository_wishlist project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,14 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'amazon_wishlist'
+BOT_NAME = 'book_depository_wishlist'
 
-SPIDER_MODULES = ['amazon_wishlist.spiders']
-NEWSPIDER_MODULE = 'amazon_wishlist.spiders'
+SPIDER_MODULES = ['book_depository_wishlist.spiders']
+NEWSPIDER_MODULE = 'book_depository_wishlist.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'amazon_wishlist (+http://www.yourdomain.com)'
+#USER_AGENT = 'book_depository_wishlist (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -47,13 +47,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'amazon_wishlist.middlewares.AmazonWishlistSpiderMiddleware': 543,
+#    'book_depository_wishlist.middlewares.AmazonWishlistSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'amazon_wishlist.middlewares.AmazonWishlistDownloaderMiddleware': 543,
+#    'book_depository_wishlist.middlewares.AmazonWishlistDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,7 +65,7 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'amazon_wishlist.pipelines.AmazonWishlistPipeline': 300,
+#    'book_depository_wishlist.pipelines.AmazonWishlistPipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -89,4 +89,4 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
-IMAGES_STORE="C:/Users/aaron/Wishlist_scraper/amazon_wishlist/amazon_wishlist/images"
+IMAGES_STORE="C:/Users/aaron/Wishlist_scraper/book_depository_wishlist/book_depository_wishlist/images"
