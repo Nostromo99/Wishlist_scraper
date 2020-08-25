@@ -20,13 +20,15 @@ def add(entry):
         check=requests.get(url)
     except:
         bad_url(entry)
+        print("hi")
         return
-    if check.ok and "bookdepository" in url:
+    if check.ok:
         with open("urls.txt","a") as urls:
             urls.write(url+"\n")
         update()
 
     else:
+        print("HO")
         bad_url(entry)
 def remove(row,item,inner_frame):
     db=shelve.open("list")
@@ -43,23 +45,15 @@ def remove(row,item,inner_frame):
             label.grid_forget()
     os.remove("amazon_wishlist/images/full/"+item["file"]+".jpg")
 
-# class geo():
-#     def __init__(self,profile,row):
-#         self.profile=profile
-#         self.row=row
-# def pos_changer(row,frames):
-#     frames[row - 1].grid(row=row + 1)
-#     frames[row].grid(row=row-1)
-#     frames[row],frames[row-1]=frames[row-1],frames[row]
+
 
 def update():
-    os.system("scrapy crawl book_depository") #-s LOG_ENABLED=False")
+    os.system("scrapy crawl book_depository -s LOG_ENABLED=False")
     db = shelve.open("list")
     row = 0
     widgets=wishlist.pack_slaves()
     buttons=[]
     rows=[]
-    # mover=[]
     for item in widgets:
         item.destroy()
     outer_frame=Frame(wishlist)
@@ -88,8 +82,7 @@ def update():
         Label(master=info_set,text= "min:€"+str(var["lowest"])).grid(row=row,column=4)
         buttons.append(Button(master=info_set,text="remove",command=lambda i=row ,item=var ,frame=inner_frame: remove(i,item,frame)))
         buttons[row].grid(row=row,column=5)
-        # mover.append(Button(master=info_set,text="up",command=lambda curent_row=row:pos_changer(curent_row,rows)))
-        # mover[row].grid(row=row,column=6)
+
         row+=1
     entry1=Entry(inner_frame)
     entry1.grid(row=row,column=0)
