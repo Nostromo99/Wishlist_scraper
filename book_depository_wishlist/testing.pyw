@@ -1,6 +1,7 @@
 import shelve
 import os
 import requests
+import re
 import PIL
 from PIL import Image
 from PIL import ImageTk
@@ -17,19 +18,17 @@ def bad_url(entry):
 def add(entry):
     url=entry.get()
     try:
-        check=requests.get(url)
+        requests.get(url)
+        with open("urls.txt", "a") as urls:
+            urls.write(url + "\n")
     except:
         bad_url(entry)
-        print("hi")
         return
-    if check.ok:
-        with open("urls.txt","a") as urls:
-            urls.write(url+"\n")
-        update()
-
-    else:
-        print("HO")
-        bad_url(entry)
+    # if check.ok:
+    #     with open("urls.txt","a") as urls:
+    #         urls.write(url+"\n")
+    #     update()
+    update()
 def remove(row,item,inner_frame):
     db=shelve.open("list")
     with open("urls.txt", "r") as url:
@@ -43,12 +42,13 @@ def remove(row,item,inner_frame):
     for label in inner_frame.grid_slaves():
         if int(label.grid_info()["row"]==row):
             label.grid_forget()
-    os.remove("book_depository_wishlist/images/full/"+item["file"]+".jpg")
+    # os.remove("book_depository_wishlist/images/full/"+item["file"]+".jpg")
 
 
 
 def update():
-    os.system("scrapy crawl book_depository -s LOG_ENABLED=False")
+    os.system("scrapy crawl book_depository")#-s LOG_ENABLED=False")
+    os.system("scrapy crawl amazon")
     db = shelve.open("list")
     row = 0
     widgets=wishlist.pack_slaves()
@@ -76,10 +76,10 @@ def update():
         pic=Label(master=info_set, image=img)
         pic.photo=img
         pic.grid(row=row, column=0)
-        Label(master=info_set,text=var["name"]+"\t").grid(row=row,column=1)
-        Label(master=info_set,text= "|current:€"+str(var["price"])+"\t|").grid(row=row,column=2)
-        Label(master=info_set,text= "avg:€"+str(var["avg"])+"\t|").grid(row=row,column=3)
-        Label(master=info_set,text= "min:€"+str(var["lowest"])).grid(row=row,column=4)
+        Label(master=info_set,text="site: "+re.match("h.*//.*?/",var["link"]).group(0)[12:-1]+"\n"+var["name"]+"\t").grid(row=row,column=1)
+        Label(master=info_set,text= "\n|current:"+var["currency"]+str(var["price"])+"\t|").grid(row=row,column=2)
+        Label(master=info_set,text= "\navg:"+var["currency"]+str(var["avg"][0])+"\t|").grid(row=row,column=3)
+        Label(master=info_set,text= "\nmin:"+var["currency"]+str(var["lowest"])).grid(row=row,column=4)
         buttons.append(Button(master=info_set,text="remove",command=lambda i=row ,item=var ,frame=inner_frame: remove(i,item,frame)))
         buttons[row].grid(row=row,column=5)
 

@@ -9,3 +9,4 @@ class Profile(Item):
     image_urls = Field()
     images=Field()
     file=Field()
+    currency=Field()
