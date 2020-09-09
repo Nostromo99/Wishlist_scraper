@@ -5,7 +5,7 @@ This tkinter app uses the [Scrapy](https://scrapy.org/) module to collect pricin
 Items are added by pasting the url into the entry box and clicking add.
 Items can be removed by simply clicking the remove button attached to each entry.
 The wishlist currently supports items from amazon.co.uk and bookdepository.
-
+[image](wishlist.PNG)
 ## adapting for personal use
 More websites can be added by simply creating a scrapy spider that collects an items':
 1.title
