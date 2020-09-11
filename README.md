@@ -1,4 +1,4 @@
-# Wishlist_scraper
+# Wishlist scraper
 
 ## Overview
 This tkinter app uses the [Scrapy](https://scrapy.org/) module to collect pricing information for specified items.
