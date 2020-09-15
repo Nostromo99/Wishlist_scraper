@@ -13,7 +13,7 @@ class amazon_spider(scrapy.Spider):
                 if self.domain==re.match("h.*//.*?/",url).group(0):
                     yield Request(url,self.parse)
     def parse(self, response):
-        if len(response.request.meta.get("redirect_urls"))>0:
+        if response.request.meta.get("redirect_urls")!=None:
             link=response.request.meta.get("redirect_urls")[0]
         else:link=response.request.url
         title=response.css("#productTitle").css("::text").extract()

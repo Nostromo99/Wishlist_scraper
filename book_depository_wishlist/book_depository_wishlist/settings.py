@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'book_depository_wishlist.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'book_depository_wishlist (+http://www.yourdomain.com)'
+USER_AGENT = 'wishlist_scraper'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
