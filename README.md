@@ -15,4 +15,4 @@ More websites can be added by simply creating a scrapy spider that collects an i
 5. page url
 
 These pieces of information can then be passed to the process function provided by book_depository_spider.
-Once thats' done simply run the spider at the start of update() in testing.pyw
+Once thats' done simply run the spider at the start of update() in testing.pyw.
