@@ -7,6 +7,7 @@ from PIL import Image
 from PIL import ImageTk
 from tkinter import *
 wishlist=Tk()
+wishlist.title("wishlist")
 wishlist.geometry("1200x700")
 scrollbar=Scrollbar(wishlist)
 def bad_url(entry):
@@ -24,10 +25,6 @@ def add(entry):
     except:
         bad_url(entry)
         return
-    # if check.ok:
-    #     with open("urls.txt","a") as urls:
-    #         urls.write(url+"\n")
-    #     update()
     update()
 def remove(row,item,inner_frame):
     db=shelve.open("list")
@@ -42,13 +39,11 @@ def remove(row,item,inner_frame):
     for label in inner_frame.grid_slaves():
         if int(label.grid_info()["row"]==row):
             label.grid_forget()
-    # os.remove("book_depository_wishlist/images/full/"+item["file"]+".jpg")
-
 
 
 def update():
-    os.system("scrapy crawl book_depository")#-s LOG_ENABLED=False")
-    os.system("scrapy crawl amazon")
+    os.system("scrapy crawl book_depository -s LOG_ENABLED=False")
+    os.system("scrapy crawl amazon -s LOG_ENABLED=False")
     db = shelve.open("list")
     row = 0
     widgets=wishlist.pack_slaves()
