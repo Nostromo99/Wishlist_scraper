@@ -26,7 +26,7 @@ class amazon_spider(scrapy.Spider):
                 price[0]=price[0].strip("\n")
             except:price=["out of stock"]
         ###################################
-        #issue here
+        #future bugs possible
         bugfix = response.css('#imgBlkFront').css("img::attr(data-a-dynamic-image)").extract()
         image = [list(json.loads(bugfix[0]).keys())[0]]
         if len(image)==0:
