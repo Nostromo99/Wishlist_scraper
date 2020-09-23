@@ -24,7 +24,7 @@ def process(title,price,image,currency,link):
     db = shelve.open("list")
     price[0] = price[0].strip(currency)
     price[0] = price[0].replace(",", ".")
-    ###fix later
+   #future bugs possible
     if price[0]=="out of stock":
         try:
             sub=db[title[0]]
@@ -47,6 +47,8 @@ def process(title,price,image,currency,link):
         sub["price"] = info.get("price")
         if sub["lowest"] > info.get("price"):
             sub["lowest"] = info.get("price")
+        sub["file"]=info.get("file")
+        sub["image_urls"]=info.get("image_urls")
         db[info.get("name")] = sub
         info["image_urls"] = []
 
