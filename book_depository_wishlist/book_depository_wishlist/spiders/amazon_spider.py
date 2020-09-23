@@ -3,6 +3,7 @@ import os
 from .. Profile import Profile
 from scrapy.http.request import Request
 from .book_depository_spider import *
+import json
 class amazon_spider(scrapy.Spider):
     name="amazon"
     domain="https://www.amazon.co.uk/"
@@ -21,8 +22,13 @@ class amazon_spider(scrapy.Spider):
         price=response.css("#buyNewSection .a-text-normal").css("::text").extract()
         if len(price)==0:
             price=response.css("#price_inside_buybox").css("::text").extract()
-            price[0]=price[0].strip("\n")
-        image = response.css('#imgBlkFront').css("img::attr(src)").extract()
+            try:
+                price[0]=price[0].strip("\n")
+            except:price=["out of stock"]
+        ###################################
+        #issue here
+        bugfix = response.css('#imgBlkFront').css("img::attr(data-a-dynamic-image)").extract()
+        image = [list(json.loads(bugfix[0]).keys())[0]]
         if len(image)==0:
             image=response.css('#imgTagWrapperId').css("img::attr(src)").extract()
         currency="£"

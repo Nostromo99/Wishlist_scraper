@@ -43,7 +43,7 @@ def remove(row,item,inner_frame):
 
 def update():
     os.system("scrapy crawl book_depository -s LOG_ENABLED=False")
-    os.system("scrapy crawl amazon -s LOG_ENABLED=False")
+    os.system("scrapy crawl amazon")
     db = shelve.open("list")
     row = 0
     widgets=wishlist.pack_slaves()
@@ -64,6 +64,7 @@ def update():
     canvas.bind_all("<MouseWheel>",lambda event:canvas.yview_scroll(-1*(int(event.delta/120)),"units"))
     for item in db:
         var=db[item]
+
         img=ImageTk.PhotoImage(PIL.Image.open("book_depository_wishlist/images/full/"+var["file"]+".jpg").resize((200,200)))
         rows.append(Frame(inner_frame))
         info_set=rows[row]

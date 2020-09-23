@@ -24,6 +24,19 @@ def process(title,price,image,currency,link):
     db = shelve.open("list")
     price[0] = price[0].strip(currency)
     price[0] = price[0].replace(",", ".")
+    ###fix later
+    if price[0]=="out of stock":
+        try:
+            sub=db[title[0]]
+            sub["price"]=price[0]
+            db[title[0]] = sub
+            return db[title[0]]
+        except:
+            dummy=Profile(name=title[0], price=price[0], link=link, avg=(price[0]),
+                   lowest=price[0], image_urls=image,
+                   file=hashlib.sha1(image[0].encode("utf-8")).hexdigest(),currency=currency)
+            db[dummy.get("name")] = dummy
+            return dummy
     info = Profile(name=title[0], price=float(price[0]), link=link, avg=(float(price[0]),2),
                    lowest=float(price[0]), image_urls=image,
                    file=hashlib.sha1(image[0].encode("utf-8")).hexdigest(),currency=currency)
