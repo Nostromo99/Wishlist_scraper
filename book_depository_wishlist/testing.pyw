@@ -43,7 +43,7 @@ def remove(row,item,inner_frame):
 
 def update():
     os.system("scrapy crawl book_depository -s LOG_ENABLED=False")
-    os.system("scrapy crawl amazon")
+    os.system("scrapy crawl amazon -s LOG_ENABLED=False")
     db = shelve.open("list")
     row = 0
     widgets=wishlist.pack_slaves()
