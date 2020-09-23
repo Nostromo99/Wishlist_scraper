@@ -89,4 +89,4 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 ITEM_PIPELINES = {'scrapy.pipelines.images.ImagesPipeline': 1}
-IMAGES_STORE="C:/Users/aaron/Wishlist_scraper/book_depository_wishlist/book_depository_wishlist/images"
+IMAGES_STORE="./book_depository_wishlist/images"
