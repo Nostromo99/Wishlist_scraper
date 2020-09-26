@@ -22,14 +22,18 @@ class amazon_spider(scrapy.Spider):
         price=response.css("#buyNewSection .a-text-normal").css("::text").extract()
         if len(price)==0:
             price=response.css("#price_inside_buybox").css("::text").extract()
-            try:
-                price[0]=price[0].strip("\n")
-            except:price=["out of stock"]
+            if len(price)==0:
+                price = response.css("#priceblock_ourprice").css("::text").extract()
+                if len(price)==0:
+                    price = ["out of stock"]
+        price[0]=price[0].strip("\n")
+
         ###################################
         #future bugs possible
         bugfix = response.css('#imgBlkFront').css("img::attr(data-a-dynamic-image)").extract()
+        if len(bugfix)==0:
+            bugfix = response.css('#imgTagWrapperId').css("img::attr(data-a-dynamic-image)").extract()
         image = [list(json.loads(bugfix[0]).keys())[0]]
-        if len(image)==0:
-            image=response.css('#imgTagWrapperId').css("img::attr(src)").extract()
+
         currency="£"
         return process(title,price,image,currency,link)
