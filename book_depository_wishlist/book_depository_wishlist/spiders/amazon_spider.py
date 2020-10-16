@@ -7,12 +7,17 @@ import json
 class amazon_spider(scrapy.Spider):
     name="amazon"
     domain="https://www.amazon.co.uk/"
-
+    def __init__(self,param=None):
+        self.param=param
     def start_requests(self):
-        with open('urls.txt', "r") as urls:
-            for url in urls:
-                if self.domain==re.match("h.*//.*?/",url).group(0):
-                    yield Request(url,self.parse)
+        if self.param:
+            if self.domain == re.match("h.*//.*?/", self.param).group(0):
+                yield Request(self.param,self.parse)
+        else:
+            with open('urls.txt', "r") as urls:
+                for url in urls:
+                    if self.domain==re.match("h.*//.*?/",url).group(0):
+                        yield Request(url,self.parse)
     def parse(self, response):
         if response.request.meta.get("redirect_urls")!=None:
             link=response.request.meta.get("redirect_urls")[0]

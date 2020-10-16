@@ -8,11 +8,17 @@ class book_depository_spider(scrapy.Spider):
     name="book_depository"
     domain="https://www.bookdepository.com/"
     start_urls=[]
+    def __init__(self,param=None):
+        self.param=param
     def start_requests(self):
-        with open('urls.txt', "r") as urls:
-            for url in urls:
-                if self.domain==re.match("h.*//.*?/",url).group(0):
-                    yield Request(url,self.parse)
+        if self.param:
+            if self.domain == re.match("h.*//.*?/", self.param).group(0):
+                yield Request(self.param,self.parse)
+        else:
+            with open('urls.txt', "r") as urls:
+                for url in urls:
+                    if self.domain==re.match("h.*//.*?/",url).group(0):
+                        yield Request(url,self.parse)
     def parse(self, response):
         title=response.css('h1').css("::text").extract()
         price=response.css('.sale-price').css("::text").extract()
@@ -50,7 +56,7 @@ def process(title,price,image,currency,link):
         sub["file"]=info.get("file")
         sub["image_urls"]=info.get("image_urls")
         db[info.get("name")] = sub
-        info["image_urls"] = []
+        # info["image_urls"] = []
 
 
     except:

@@ -25,7 +25,9 @@ def add(entry):
     except:
         bad_url(entry)
         return
-    update()
+    os.system("scrapy crawl book_depository -s LOG_ENABLED=False -a param="+url)
+    os.system("scrapy crawl amazon -s LOG_ENABLED=False -a param=" + url)
+    soft_update()
 def remove(row,item,inner_frame):
     db=shelve.open("list")
     with open("urls.txt", "r") as url:
@@ -41,9 +43,11 @@ def remove(row,item,inner_frame):
             label.grid_forget()
 
 
-def update():
+def hard_update():
     os.system("scrapy crawl book_depository -s LOG_ENABLED=False")
     os.system("scrapy crawl amazon -s LOG_ENABLED=False")
+    soft_update()
+def soft_update():
     db = shelve.open("list")
     row = 0
     widgets=wishlist.pack_slaves()
@@ -85,5 +89,5 @@ def update():
     Button(inner_frame,text="add",command=lambda: add(entry1)).grid(row=row+1,column=0,pady=5)
 
     db.close()
-update()
+hard_update()
 wishlist.mainloop()
